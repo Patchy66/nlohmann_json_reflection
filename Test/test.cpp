@@ -76,8 +76,8 @@ TEST_CASE("enum")
 
 enum TST_ENUM_MSK
 {
-  TST_MSK,
-  ENUM_MSK
+  TST_MSK  = 1 << 0,
+  ENUM_MSK = 1 << 1
 };
 template <> struct nlohmann::adl_serializer<TST_ENUM_MSK> : universal_serializer_msk {};
 
@@ -91,12 +91,12 @@ TEST_CASE("enum msk")
   json js;
   TST_ENUM_MSK tst_enum_msk;
 
-  tst_enum_msk  = (TST_ENUM_MSK)(1 << TST_MSK);  
-  tst_enum_msk |= (TST_ENUM_MSK)(1 << ENUM_MSK); 
+  tst_enum_msk  = TST_MSK;  
+  tst_enum_msk |= ENUM_MSK; 
 
   js = tst_enum_msk; 
 
-  REQUIRE(js == TST_ENUM_MSK(1 << TST_MSK | 1 << ENUM_MSK));
+  REQUIRE(js.get<TST_ENUM_MSK>() == (TST_MSK | ENUM_MSK));
 
   std::string tst_string_1 = js[0];
   std::string tst_string_2 = js[1];

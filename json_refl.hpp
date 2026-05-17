@@ -12,7 +12,7 @@ struct universal_serializer_msk
     {
         template for (constexpr auto it : std::define_static_array(std::meta::enumerators_of(^^T)))
         {
-            if(value & ( 1 << [:it:] ) ){
+            if(value & [:it:] ){
                 j.push_back(identifier_of(it));
             }
         }
@@ -30,7 +30,7 @@ struct universal_serializer_msk
         {
             for( auto & j_it : j){
                 if(j_it == identifier_of(it)){
-                    value |= (T)( 1 << (size_t)[:it:]);
+                    value |= [:it:];
                     break;
                 }
             }
